@@ -1,0 +1,2 @@
+class NoNodesAvailableError(ValueError):
+    pass
