@@ -26,3 +26,20 @@ class RoundRobinStrategy(Strategy):
             self.index = 0
 
         return node
+
+
+class WeightedRoundRobinStrategy(RoundRobinStrategy):
+    def get_node(self, ctx: RequestContext) -> Node:
+        nodes = list(filter(lambda node: node.available, self.nodes))
+        if not nodes:
+            raise NoNodesAvailableError
+        best_node = None
+        total = 0
+        for node in nodes:
+            total += node.weight
+            if not best_node or node.weight > best_node.weight:
+                best_node = node
+        if not best_node:
+            raise NoNodesAvailableError
+        best_node.weight -= total
+        return best_node

@@ -23,6 +23,15 @@ def two_nodes() -> list[Node]:
     return [Node(node_available=True), Node(node_available=True)]
 
 
+@pytest.fixture
+def three_nodes_with_different_weights() -> list[Node]:
+    return [
+        Node(node_available=True, weight=1),
+        Node(node_available=True, weight=2),
+        Node(node_available=True, weight=3),
+    ]
+
+
 def test_get_node_no_avaliable_nodes(no_avaliable_nodes):
     strategy = RoundRobinStrategy(no_avaliable_nodes)
     with pytest.raises(NoNodesAvailableError):
@@ -43,3 +52,19 @@ def test_get_node_two_nodes(two_nodes):
     assert node is two_nodes[1]
     node = strategy.get_node(RequestContext())
     assert node is two_nodes[0]
+
+
+def test_get_node_three_nodes_with_different_weights(three_nodes_with_different_weights):
+    strategy = RoundRobinStrategy(three_nodes_with_different_weights)
+    nodes = []
+    total_weight = sum(node.weight for node in three_nodes_with_different_weights)
+    for _ in range(total_weight):
+        nodes.append(strategy.get_node(RequestContext()))
+    nodes = [
+        three_nodes_with_different_weights[2],
+        three_nodes_with_different_weights[1],
+        three_nodes_with_different_weights[2],
+        three_nodes_with_different_weights[0],
+        three_nodes_with_different_weights[1],
+        three_nodes_with_different_weights[2],
+    ]

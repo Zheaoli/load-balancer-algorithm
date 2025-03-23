@@ -6,7 +6,7 @@ class Node:
     host: str = ""
     port: int = 0
     node_available: bool = True
-    weight = 0
+    weight: int = 0
     current_weight: int = 0
 
     @property
