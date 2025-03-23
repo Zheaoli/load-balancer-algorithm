@@ -18,3 +18,13 @@ class RandomStrategy(Strategy):
             raise NoNodesAvailableError
 
         return random.choice(nodes)
+
+
+class WeightedRandomStrategy(Strategy):
+    def get_node(self, ctx: RequestContext) -> Node:
+        nodes = list(filter(lambda node: node.available, self.nodes))
+        if not nodes:
+            raise NoNodesAvailableError
+
+        weights = [node.weight for node in nodes]
+        return random.choices(nodes, weights=weights)[0]
