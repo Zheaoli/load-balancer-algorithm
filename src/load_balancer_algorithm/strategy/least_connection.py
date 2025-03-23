@@ -22,3 +22,17 @@ class LeastConnectionStrategy(Strategy):
             raise NoNodesAvailableError
         best.connections += 1
         return best
+
+
+class WeightedLeastConnectionStrategy(LeastConnectionStrategy):
+    def get_node(self, ctx: RequestContext) -> Node:
+        best = None
+        for node in self.nodes:
+            if not node.available:
+                continue
+            if not best or (node.connections / node.weight) < (best.connections / best.weight):
+                best = node
+        if not best:
+            raise NoNodesAvailableError
+        best.connections += 1
+        return best
