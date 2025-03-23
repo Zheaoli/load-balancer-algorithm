@@ -12,8 +12,8 @@ if typing.TYPE_CHECKING:
 
 
 class RandomStrategy(Strategy):
-    def get_node(self, ctx: RequestContext, nodes: list[Node]) -> Node:
-        nodes = list(filter(lambda node: node.available, nodes))
+    def get_node(self, ctx: RequestContext) -> Node:
+        nodes = list(filter(lambda node: node.available, self.nodes))
         if not nodes:
             raise NoNodesAvailableError
 

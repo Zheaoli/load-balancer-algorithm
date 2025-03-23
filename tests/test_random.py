@@ -24,18 +24,18 @@ def two_nodes() -> list[Node]:
 
 
 def test_get_node_no_avaliable_nodes(no_avaliable_nodes):
-    strategy = RandomStrategy()
+    strategy = RandomStrategy(no_avaliable_nodes)
     with pytest.raises(NoNodesAvailableError):
-        strategy.get_node(RequestContext(), no_avaliable_nodes)
+        strategy.get_node(RequestContext())
 
 
 def test_get_node_one_nodes(one_nodes):
-    strategy = RandomStrategy()
-    node = strategy.get_node(RequestContext(), one_nodes)
+    strategy = RandomStrategy(one_nodes)
+    node = strategy.get_node(RequestContext())
     assert node == one_nodes[0]
 
 
 def test_get_node_two_nodes(two_nodes):
-    strategy = RandomStrategy()
-    node = strategy.get_node(RequestContext(), two_nodes)
+    strategy = RandomStrategy(two_nodes)
+    node = strategy.get_node(RequestContext())
     assert node in two_nodes
