@@ -3,4 +3,4 @@ import dataclasses
 
 @dataclasses.dataclass
 class RequestContext:
-    pass
+    url: str = ""
