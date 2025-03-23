@@ -13,3 +13,6 @@ class Node:
     @property
     def available(self) -> bool:
         return self.node_available
+
+    def __str__(self) -> str:
+        return f"{self.host}:{self.port}"
