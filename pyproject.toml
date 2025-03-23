@@ -50,7 +50,7 @@ extend-select = [
   "UP",   # pyupgrade
   "YTT",  # flake8-2020
 ]
-extend-ignore = ["B018", "B019", "RUF018"]
+extend-ignore = ["B018", "B019", "RUF018", "RUF003"]
 [tool.ruff.lint.mccabe]
 max-complexity = 10
 
