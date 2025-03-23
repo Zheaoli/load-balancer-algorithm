@@ -12,6 +12,3 @@ class Node:
     @property
     def available(self) -> bool:
         return self.node_available
-
-    def __post_init__(self):
-        self.current_weight = self.weight
